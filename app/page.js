@@ -11,17 +11,23 @@ function HeaderComponent() {
     );
 }
 
-// todo: make it so that it automatically cuts off the https://logs.tf/profile/ and displays the steamID 
 function InputComponent({ onSearch }) {
     const [inputValue, setInputValue] = useState('');
 
     const handleInputChange = (e) => {
-        setInputValue(e.target.value);
+        let value = e.target.value.trim();
+
+        const urlPrefix = "https://logs.tf/profile/";
+        if (value.startsWith(urlPrefix)) {
+            value = value.slice(urlPrefix.length); 
+        }
+
+        setInputValue(value);
     };
 
     const handleSearchClick = () => {
         if (inputValue.trim()) {
-            onSearch(inputValue); // Pass the input value to the parent component
+            onSearch(inputValue); 
         }
     };
 
@@ -50,49 +56,67 @@ function AverageDPMComponent({ dpmList }) {
     );
 }
 
-function MessageComponent({id64, dpmList, setDpmList, setLoading }) {
+function MessageComponent({ id64, dpmList, setDpmList, setLoading }) {
     useEffect(() => {
-        if(!id64) return; 
+        if (!id64) return;
 
-        async function fetchLogDetails() {
-            setLoading(1);
+        const fetchLogDetails = async () => {
+            setLoading("LOADING");
             setDpmList([]);
 
             try {
-                const response = await fetch(`/api?id64=${id64}`); // calls GET(); 
-                const reader = response.body.getReader(); 
-                
-                while(true) {
-                    const { value, done } = await reader.read(); 
-                    if (done) break; 
-    
-                    const chunk = new TextDecoder().decode(value); 
-                    const lines = chunk.split('\n').filter(line => line); 
-    
-                    lines.forEach(line => {
-                        try {
-                            const data = JSON.parse(line); 
-                            setDpmList(prev => [...prev, data]);     
-                        } catch(parseError) {
-                            console.error("Error");
-                            setLoading(-1);
-                        }
-                    });
-                }  
-                setLoading(2); 
+                const response = await fetch(`/api?id64=${id64}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch data: ${response.statusText}`);
+                }
+
+                if (response.body?.getReader) {
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+
+                    while (true) {
+                        const { value, done } = await reader.read();
+                        if (done) break;
+
+                        const chunk = decoder.decode(value);
+                        const lines = chunk.split('\n').filter(Boolean);
+
+                        lines.forEach(line => {
+                            try {
+                                const data = JSON.parse(line);
+                                setDpmList(prev => [...prev, data]);
+                            } catch (parseError) {
+                                console.error("Error parsing JSON:", parseError);
+                                setLoading("ERROR");
+                            }
+                        });
+                    }
+                } else {
+                    const data = await response.json();
+                    if (Array.isArray(data)) {
+                        setDpmList(data);
+                    } else {
+                        console.error("Unexpected data format");
+                        setLoading("ERROR");
+                    }
+                }
+
+                setLoading("SUCCESS");
             } catch (error) {
-                console.error("Error:", error);
-                setLoading(-1);
+                console.error("Error fetching data:", error);
+                setLoading("ERROR");
             }
-        }
+        };
 
         fetchLogDetails();
-    }, [id64]); // rerun if input changes
+    }, [id64, setDpmList, setLoading]);
 
     return (
         <div className="message">
             {dpmList.map((item, index) => (
-                <div key={index}>https://logs.tf/{item.id}: {item.dpmRatio} DPM</div>
+                <div key={item.id || index}>
+                    https://logs.tf/{item.id}: {item.dpmRatio} DPM
+                </div>
             ))}
         </div>
     );
@@ -128,11 +152,11 @@ function TopFiveBestLogsComponent({ dpmList }) {
 
 function MyComponent() {
     const [dpmList, setDpmList] = useState([]);
-    const [loading, setLoading] = useState(0); // 0 is chilling, 1 is searching, 2 is finished
+    const [loading, setLoading] = useState("IDLE"); // "IDLE" "LOADING" "SUCCESS" "ERROR"
     const [id64, setId64] = useState('');
 
     const handleSearch = (inputId64) => {
-        setId64(inputId64); // update id64
+        setId64(inputId64); 
     };
 
     return (
@@ -150,12 +174,12 @@ function MyComponent() {
                 />
             </div>
 
-            {loading === 1 && <div className="loading-indicator">Loading...</div>} 
-            {loading === -1 && <div className="error-message">Please enter a valid SteamID64</div>}
+            {loading === "LOADING" && <div className="loading-indicator">Loading...</div>} 
+            {loading === "ERROR" && <div className="error-message">Please enter a valid SteamID64</div>}
 
             <AverageDPMComponent dpmList={dpmList} />
 
-            {loading == 2 && ( 
+            {loading === "SUCCESS" && ( 
                 <>
                     <TopFiveWorstLogsComponent dpmList={dpmList} />
                     <TopFiveBestLogsComponent dpmList={dpmList} />
@@ -165,4 +189,4 @@ function MyComponent() {
     );
 }
 
-export default MyComponent; {/* this is how layout knows what the default component is*/}
+export default MyComponent; 
