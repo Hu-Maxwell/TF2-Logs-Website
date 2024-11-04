@@ -38,3 +38,12 @@
     font-family: 'TF2Build', sans-serif;
     text-align: center; 
 }
+
+.scrollable-container {
+    width: 50%; /* Adjust width as needed */
+    height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 1px solid #ccc; /* Optional: Add a border */
+    padding: 10px; /* Optional: Add padding */
+    margin-left: 300px;
+}

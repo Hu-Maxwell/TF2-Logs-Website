@@ -1,5 +1,9 @@
 const id64 = '76561198283462369';
 
+function handleInputSubmit() {
+
+}
+
 function convertToId3(id64) {
     // stuff
     // base log 76561197960265728
@@ -14,8 +18,8 @@ const id3 = convertToId3(id64);
 
 // todo: only allow 6s games
 export async function fetchLogList() {
-    const response = await fetch(`https://logs.tf/api/v1/log?player=${id64}&limit=100`);
-    const data = await response.json();
+    const response = await fetch(`https://logs.tf/api/v1/log?player=${id64}`);
+    const data = await response.json(); 
     return data.logs.map(log => log.id);
 }
 
@@ -62,6 +66,7 @@ export async function GET() {
                 console.log(dpmRatio);
     
                 await writer.write(encoder.encode(JSON.stringify({
+                    id: logsList[i],
                     dpmRatio: dpmRatio
                 }) + '\n'));
             }
