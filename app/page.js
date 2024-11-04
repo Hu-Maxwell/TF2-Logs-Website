@@ -12,13 +12,28 @@ function HeaderComponent() {
 }
 
 // todo: make it so that it automatically cuts off the https://logs.tf/profile/ and displays the steamID 
-function InputComponent() {
+function InputComponent({ onSearch }) {
     const [inputValue, setInputValue] = useState('');
+
+    const handleInputChange = (e) => {
+        setInputValue(e.target.value);
+    };
+
+    const handleSearchClick = () => {
+        if (inputValue.trim()) {
+            onSearch(inputValue); // Pass the input value to the parent component
+        }
+    };
 
     return (
         <div className="input-container"> 
-            <input className="input"></input> 
-            <button>Search</button>
+            <input 
+                className="input"
+                value={inputValue}
+                onChange={handleInputChange}
+                placeholder="Enter SteamID64"    
+            /> 
+            <button onClick={handleSearchClick}>Search</button>
         </div>
     ); 
 }
@@ -35,10 +50,14 @@ function AverageDPMComponent({ dpmList }) {
     );
 }
 
-function MessageComponent({dpmList, setDpmList, setLoading }) {
+function MessageComponent({id64, dpmList, setDpmList, setLoading }) {
     useEffect(() => {
+        if(!id64) return; 
+
         async function fetchLogDetails() {
             setLoading(true);
+            setDpmList([]);
+
             try {
                 const response = await fetch('/api/'); // calls GET(); 
                 const reader = response.body.getReader(); 
@@ -61,8 +80,9 @@ function MessageComponent({dpmList, setDpmList, setLoading }) {
                 setLoading(false);
             }
         }
+
         fetchLogDetails();
-    }, []);
+    }, [id64]); // rerun if input changes
 
     return (
         <div className="message">
@@ -104,16 +124,30 @@ function TopFiveBestLogsComponent({ dpmList }) {
 function MyComponent() {
     const [dpmList, setDpmList] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [id64, setId64] = useState('');
+
+    const handleSearch = (inputId64) => {
+        setId64(inputId64); // update id64
+    };
 
     return (
         <>
             <HeaderComponent/> 
-            <InputComponent/>
+
+            <InputComponent onSearch={handleSearch}/>
+
             <div className="scrollable-container">
-                <MessageComponent dpmList={dpmList} setDpmList={setDpmList} setLoading={setLoading}/>
+                <MessageComponent
+                    id64={id64}
+                    dpmList={dpmList}
+                    setDpmList={setDpmList}
+                    setLoading={setLoading}
+                />
             </div>
-            {loading && <div className="loading-indicator">Loading...</div>} {/* Loading message */}   
+
+            {loading && <div className="loading-indicator">Loading...</div>} 
             <AverageDPMComponent dpmList={dpmList} />
+
             {!loading && ( 
                 <>
                     <TopFiveWorstLogsComponent dpmList={dpmList} />
