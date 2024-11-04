@@ -1,5 +1,3 @@
-const id64 = '76561198283462369';
-
 function handleInputSubmit() {
 
 }
@@ -14,21 +12,27 @@ function convertToId3(id64) {
     return `[U:1:${id3.toString()}]`; 
 }
 
-const id3 = convertToId3(id64);
-
 // todo: only allow 6s games
-export async function fetchLogList() {
+export async function fetchLogList(id64) {
     const response = await fetch(`https://logs.tf/api/v1/log?player=${id64}`);
     const data = await response.json(); 
     return data.logs.map(log => log.id);
 }
 
-export async function GET() {
+export async function GET(request) {
+    const { searchParams } = new URL(request.url);
+    const id64 = searchParams.get('id64');
+
+    if (!id64) {
+        return new Response('id64 is required', { status: 400 });
+    }
+
+    const logsList = await fetchLogList(id64); 
+    const id3 = convertToId3(id64);
+
     const encoder = new TextEncoder();
     const stream = new TransformStream();
     const writer = stream.writable.getWriter();
-
-    const logsList = await fetchLogList(); 
 
     (async () => {
         for(let i = 0; i < logsList.length; i++) {
@@ -37,9 +41,11 @@ export async function GET() {
             const userPlayer = logData.players[id3];
 
             // if log is invalid, skip 
-            if(userPlayer.class_stats[0].type == "medic" ||
+            if(
+                userPlayer.class_stats[0].type == "medic" ||
                 userPlayer.class_stats[0].total_time < 1200 || 
-                logData.length < 1200) { 
+                logData.length < 1200
+            ) { 
                 // skip
             } else { 
                 let userDpm = 0;
@@ -53,7 +59,10 @@ export async function GET() {
                         userDpm = userPlayer.dapm;
                         playerCount++;
                     } else {
-                        if (player.class_stats[0].type != "medic" && player.class_stats[0].total_time > 1200) {
+                        if (
+                            player.class_stats[0].type != "medic" && 
+                            player.class_stats[0].total_time > 1200
+                        ) {
                             totalDpm += player.dapm;
                             playerCount++; 
                         }

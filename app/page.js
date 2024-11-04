@@ -55,11 +55,11 @@ function MessageComponent({id64, dpmList, setDpmList, setLoading }) {
         if(!id64) return; 
 
         async function fetchLogDetails() {
-            setLoading(true);
+            setLoading(1);
             setDpmList([]);
 
             try {
-                const response = await fetch('/api/'); // calls GET(); 
+                const response = await fetch(`/api?id64=${id64}`); // calls GET(); 
                 const reader = response.body.getReader(); 
                 
                 while(true) {
@@ -70,14 +70,19 @@ function MessageComponent({id64, dpmList, setDpmList, setLoading }) {
                     const lines = chunk.split('\n').filter(line => line); 
     
                     lines.forEach(line => {
-                        const data = JSON.parse(line); 
-                        setDpmList(prev => [...prev, data]); 
+                        try {
+                            const data = JSON.parse(line); 
+                            setDpmList(prev => [...prev, data]);     
+                        } catch(parseError) {
+                            console.error("Error");
+                            setLoading(-1);
+                        }
                     });
-                }    
+                }  
+                setLoading(2); 
             } catch (error) {
                 console.error("Error:", error);
-            } finally {
-                setLoading(false);
+                setLoading(-1);
             }
         }
 
@@ -123,7 +128,7 @@ function TopFiveBestLogsComponent({ dpmList }) {
 
 function MyComponent() {
     const [dpmList, setDpmList] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(0); // 0 is chilling, 1 is searching, 2 is finished
     const [id64, setId64] = useState('');
 
     const handleSearch = (inputId64) => {
@@ -145,10 +150,12 @@ function MyComponent() {
                 />
             </div>
 
-            {loading && <div className="loading-indicator">Loading...</div>} 
+            {loading === 1 && <div className="loading-indicator">Loading...</div>} 
+            {loading === -1 && <div className="error-message">Please enter a valid SteamID64</div>}
+
             <AverageDPMComponent dpmList={dpmList} />
 
-            {!loading && ( 
+            {loading == 2 && ( 
                 <>
                     <TopFiveWorstLogsComponent dpmList={dpmList} />
                     <TopFiveBestLogsComponent dpmList={dpmList} />
