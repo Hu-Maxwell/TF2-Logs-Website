@@ -11,8 +11,11 @@ function convertToId3(id64) {
 // todo: only allow 6s games
 export async function fetchLogList(id64) {
     const response = await fetch(`https://logs.tf/api/v1/log?player=${id64}`);
-    const data = await response.json(); 
-    return data.logs.map(log => log.id);
+    const data = await response.json();
+    
+    // Ensure unique log IDs
+    const uniqueLogs = Array.from(new Set(data.logs.map(log => log.id)));
+    return uniqueLogs;
 }
 
 export async function GET(request) {

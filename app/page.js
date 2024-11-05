@@ -40,18 +40,16 @@ function InputComponent({ onSearch, setLoading}) {
     };
 
     return (
-        <div className="input-container"> 
-            <form> 
-            <input 
-                    className="input"
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyDown}
-                    placeholder="Enter SteamID64"    
-                /> 
-                <img className="input-logo" src="logo.png" alt="Logo" />
-            </form>
-        </div>
+        <form> 
+        <input 
+                className="input"
+                value={inputValue}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                placeholder="Enter SteamID64"    
+            /> 
+            <img className="input-logo" src="logo.png" alt="Logo" />
+        </form>
     ); 
 }
 // <button onClick={handleSearchClick}>Search</button>
@@ -96,7 +94,13 @@ function MessageComponent({ id64, dpmList, setDpmList, setLoading }) {
                         lines.forEach(line => {
                             try {
                                 const data = JSON.parse(line);
-                                setDpmList(prev => [...prev, data]);
+                                setDpmList(prev => {
+                                    if (!prev.some(p => p.id === data.id)) {
+                                        return [...prev, data];
+                                    } else {
+                                        return prev;
+                                    }
+                                });
                             } catch (parseError) {
                                 console.error("Error parsing JSON:", parseError);
                                 setLoading("ERROR");
@@ -125,14 +129,15 @@ function MessageComponent({ id64, dpmList, setDpmList, setLoading }) {
 
     return (
         <div className="message">
-            {dpmList.map((item, index) => (
-                <div key={item.id || index}>
+            {dpmList.map((item) => (
+                <div key={item.id}> 
                     https://logs.tf/{item.id}: {item.dpmRatio} DPM
                 </div>
             ))}
         </div>
     );
 }
+
 
 function TopFiveWorstLogsComponent({ dpmList }) {
     // Sort the list in ascending order and pick the top 5 worst logs
@@ -141,8 +146,10 @@ function TopFiveWorstLogsComponent({ dpmList }) {
     return (
         <div className="top-five-worst-logs">
             <h3>Top 5 Worst Logs</h3>
-            {worstLogs.map((log, index) => (
-                <div key={index}>https://logs.tf/{log.id}: {log.dpmRatio} DPM</div>
+            {worstLogs.map((log) => (
+                <div key={log.id}> 
+                    https://logs.tf/{log.id}: {log.dpmRatio} DPM
+                </div>
             ))}
         </div>
     );
@@ -155,8 +162,10 @@ function TopFiveBestLogsComponent({ dpmList }) {
     return (
         <div className="top-five-best-logs">
             <h3>Top 5 Best Logs</h3>
-            {bestLogs.map((log, index) => (
-                <div key={index}>https://logs.tf/{log.id}: {log.dpmRatio} DPM</div>
+            {bestLogs.map((log) => (
+                <div key={log.id}> 
+                    https://logs.tf/{log.id}: {log.dpmRatio} DPM
+                </div>
             ))}
         </div>
     );
@@ -191,7 +200,6 @@ function MyComponent() {
                         setLoading={setLoading}
                     />
                 </div>
-                <div className="loading-indicator">Loading...</div>
             </>
             }
 

@@ -25,14 +25,10 @@
     margin: 0;
 }
 
-.input-container {
-    position: relative;
-    text-align: center;
-    padding: 30px;
-}
-
 form{
-    position: relative;
+    transform: translate(-50%, -50%);
+
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
