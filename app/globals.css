@@ -9,6 +9,22 @@
     src: url('./fonts/tf2build.ttf') format('truetype');
 }
 
+.top-section {
+    height: 100vh; /* Takes the full height of the viewport */
+}
+
+.second-section {
+    transform: translateY(100px);
+    height: 100vh;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.third-section {
+    transform: translateY(100px);
+    height: 100vh;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
 .header-component-container {
     background-color: #34302d; 
     margin: 0;

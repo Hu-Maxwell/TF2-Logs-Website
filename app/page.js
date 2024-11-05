@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 function HeaderComponent() {
     return (
@@ -180,37 +180,51 @@ function MyComponent() {
         setId64(inputId64); 
     };
 
+    const secondSectionRef = useRef(null); 
+    useEffect(() => {
+        if (loading === "LOADING" && secondSectionRef.current) {
+            secondSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [loading]);
+
     return (
         <>
-            <HeaderComponent/> 
+            <div className="top-section"> 
+                <HeaderComponent/> 
 
-            <InputComponent onSearch={handleSearch} setLoading={setLoading}/>
+                <InputComponent onSearch={handleSearch} setLoading={setLoading}/>
+            </div> 
 
-            {loading === "LOADING" && <div className="loading-indicator">Loading...</div>}
+            <div className="second-section" ref={secondSectionRef}> 
+                {loading === "LOADING" && <div className="loading-indicator">Loading...</div>}
 
-            {(loading === "LOADING" || loading === "SUCCESS") &&
-            <>
-                <AverageDPMComponent dpmList={dpmList} />
+                {(loading === "LOADING" || loading === "SUCCESS") &&
+                <>
+                    <AverageDPMComponent dpmList={dpmList} />
 
-                <div className="scrollable-container">
-                    <MessageComponent
-                        id64={id64}
-                        dpmList={dpmList}
-                        setDpmList={setDpmList}
-                        setLoading={setLoading}
-                    />
-                </div>
-            </>
-            }
+                    <div className="scrollable-container">
+                        <MessageComponent
+                            id64={id64}
+                            dpmList={dpmList}
+                            setDpmList={setDpmList}
+                            setLoading={setLoading}
+                        />
+                    </div>
+                </>
+                }
 
-            {loading === "ERROR" && <div className="error-message">Please enter a valid SteamID64</div>}
+                {loading === "ERROR" && <div className="error-message">Please enter a valid SteamID64</div>}
 
+            </div>
+
+            <div className="third-section"> 
             {loading === "SUCCESS" && ( 
                 <>
                     <TopFiveWorstLogsComponent dpmList={dpmList} />
                     <TopFiveBestLogsComponent dpmList={dpmList} />
                 </>
             )}
+            </div>
         </>
     );
 }
