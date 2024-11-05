@@ -33,16 +33,20 @@ function InputComponent({ onSearch }) {
 
     return (
         <div className="input-container"> 
-            <input 
-                className="input"
-                value={inputValue}
-                onChange={handleInputChange}
-                placeholder="Enter SteamID64"    
-            /> 
-            <button onClick={handleSearchClick}>Search</button>
+            <form> 
+                <input 
+                    className="input"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    placeholder="Enter SteamID64"    
+                /> 
+                <img className="input-logo" src="logo.png" alt="Logo" />
+            </form>
         </div>
     ); 
 }
+// <button onClick={handleSearchClick}>Search</button>
+
 
 function AverageDPMComponent({ dpmList }) {
     const average = dpmList.length > 0 
