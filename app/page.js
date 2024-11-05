@@ -54,6 +54,15 @@ function InputComponent({ onSearch, setLoading}) {
 }
 // <button onClick={handleSearchClick}>Search</button>
 
+// if loading, spin faster 
+// if not, spin slower
+function LoadingComponent({ setLoading }) { 
+    return (
+        <div className="loading-logo-container"> 
+            <img className="loading-logo" src="logo.png" alt="Logo"/>
+        </div> 
+    ); 
+}
 
 function AverageDPMComponent({ dpmList }) {
     const average = dpmList.length > 0 
@@ -138,7 +147,6 @@ function MessageComponent({ id64, dpmList, setDpmList, setLoading }) {
     );
 }
 
-
 function TopFiveWorstLogsComponent({ dpmList }) {
     // Sort the list in ascending order and pick the top 5 worst logs
     const worstLogs = [...dpmList].sort((a, b) => a.dpmRatio - b.dpmRatio).slice(0, 5);
@@ -195,12 +203,13 @@ function MyComponent() {
                 <InputComponent onSearch={handleSearch} setLoading={setLoading}/>
             </div> 
 
-            <div className="second-section" ref={secondSectionRef}> 
-                {loading === "LOADING" && <div className="loading-indicator">Loading...</div>}
 
+            <div className="second-section" ref={secondSectionRef}> 
                 {(loading === "LOADING" || loading === "SUCCESS") &&
                 <>
-                    <AverageDPMComponent dpmList={dpmList} />
+                    {loading === "LOADING" && <LoadingComponent setLoading={setLoading}/>}
+
+                    <AverageDPMComponent className="average-dpm-component" dpmList={dpmList} />
 
                     <div className="scrollable-container">
                         <MessageComponent
