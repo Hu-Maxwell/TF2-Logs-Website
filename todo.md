@@ -1,21 +1,20 @@
-O. add error handling and fix everything
- - make code pretty 
- - 
+X. add ui elements
+ - make it so that the search option is in the middle
+ - when loading, scroll down to: 
+    - avg dpm top left
+    - tf2 logo spininng 
+    - all logs
+- when fin:
+    your top 5 worst logs are: 
+    your top 5 best logs are: 
 
+then publish site 
 
-O. add ui elements
- X average DPM while loading
- X a little output box 
-    - make automatically scroll down all the way 
- - spining tf2 logo when loading
-
- - once finished loading, show top 5 best and worst logs 
-
-O. add filter options 
+X. add filter options 
  - disallow logs past a date of X 
  - don't do auto DPM filter
 
-O. add more stats and functionality, such as 
+X. add more stats and functionality, such as 
  - impact calculator
  - predicted impact 
  - rgl winner predictions 

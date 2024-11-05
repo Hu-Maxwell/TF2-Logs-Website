@@ -1,7 +1,3 @@
-function handleInputSubmit() {
-
-}
-
 function convertToId3(id64) {
     // stuff
     // base log 76561197960265728

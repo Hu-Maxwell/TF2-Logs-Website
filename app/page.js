@@ -11,7 +11,7 @@ function HeaderComponent() {
     );
 }
 
-function InputComponent({ onSearch }) {
+function InputComponent({ onSearch, setLoading}) {
     const [inputValue, setInputValue] = useState('');
 
     const handleInputChange = (e) => {
@@ -31,13 +31,22 @@ function InputComponent({ onSearch }) {
         }
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleSearchClick();
+            setLoading("LOADING");
+        }
+    };
+
     return (
         <div className="input-container"> 
             <form> 
-                <input 
+            <input 
                     className="input"
                     value={inputValue}
                     onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
                     placeholder="Enter SteamID64"    
                 /> 
                 <img className="input-logo" src="logo.png" alt="Logo" />
@@ -65,7 +74,6 @@ function MessageComponent({ id64, dpmList, setDpmList, setLoading }) {
         if (!id64) return;
 
         const fetchLogDetails = async () => {
-            setLoading("LOADING");
             setDpmList([]);
 
             try {
@@ -167,21 +175,27 @@ function MyComponent() {
         <>
             <HeaderComponent/> 
 
-            <InputComponent onSearch={handleSearch}/>
+            <InputComponent onSearch={handleSearch} setLoading={setLoading}/>
 
-            <div className="scrollable-container">
-                <MessageComponent
-                    id64={id64}
-                    dpmList={dpmList}
-                    setDpmList={setDpmList}
-                    setLoading={setLoading}
-                />
-            </div>
+            {loading === "LOADING" && <div className="loading-indicator">Loading...</div>}
 
-            {loading === "LOADING" && <div className="loading-indicator">Loading...</div>} 
+            {(loading === "LOADING" || loading === "SUCCESS") &&
+            <>
+                <AverageDPMComponent dpmList={dpmList} />
+
+                <div className="scrollable-container">
+                    <MessageComponent
+                        id64={id64}
+                        dpmList={dpmList}
+                        setDpmList={setDpmList}
+                        setLoading={setLoading}
+                    />
+                </div>
+                <div className="loading-indicator">Loading...</div>
+            </>
+            }
+
             {loading === "ERROR" && <div className="error-message">Please enter a valid SteamID64</div>}
-
-            <AverageDPMComponent dpmList={dpmList} />
 
             {loading === "SUCCESS" && ( 
                 <>
