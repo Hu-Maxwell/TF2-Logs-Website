@@ -4,11 +4,20 @@ X. add ui elements
     - avg dpm top left
     - tf2 logo spininng 
     - all logs
+    - XXXXX elapsed time 
+    - XXXXX color coded tf2 logs, green good red bad
+    - XXXXX average K/D
 - when fin:
     your top 5 worst logs are: 
     your top 5 best logs are: 
 
 then publish site 
+
+X. backend
+ - auto DPM multiplier for scout and soldier
+
+X. frontend
+ - color theme
 
 X. add filter options 
  - disallow logs past a date of X 

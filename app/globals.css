@@ -18,8 +18,8 @@
     }
 }
 
-.top-section {
-    height: 100vh; /* Takes the full height of the viewport */
+.first-section {
+    height: 100vh; 
 }
 
 .second-section {
@@ -27,10 +27,10 @@
     transform: translateY(100px);
     height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between; 
+    align-items: center; 
     transition: opacity 0.5s ease, transform 0.5s ease;
-    
+    padding: 0 5%; 
 }
 
 .third-section {
@@ -118,6 +118,15 @@ form:hover .input-logo {
     color: white;
 }
 
+
+.left-half, .right-half {
+    width: 45%; /* Adjust as needed */
+    display: flex;
+    justify-content: center; /* Horizontally center content */
+    align-items: center; /* Vertically center content */
+}
+
+
 .scrollable-container {
     width: 375  px;
     height: 300px;
@@ -127,6 +136,8 @@ form:hover .input-logo {
     margin-top: 10px;
     background-color: rgba(255, 255, 255, 0.8); 
     z-index: 2;
+
+    font-size: 15;
 }
  
 .scrollable-container::-webkit-scrollbar {
@@ -159,10 +170,12 @@ form:hover .input-logo {
 
 .loading-logo {
     animation: rotation 8s infinite linear;
+    /* make bigger */ 
 } 
 
 .average-dpm {
     font-family: 'TF2Build', sans-serif;
-    font-size: 20px;
+    font-size: 80px;
+
     z-index: 2;
 }
