@@ -48,7 +48,11 @@ export async function GET(request) {
                 // skip
             } else { 
                 let userDpm = 0;
+                let userKd = 0;
+
                 let totalDpm = 0; 
+                let totalKd = 0; 
+
                 let playerCount = 0; 
                 
                 for (const key in logData.players) {
@@ -56,6 +60,7 @@ export async function GET(request) {
     
                     if (player === userPlayer) {
                         userDpm = userPlayer.dapm;
+                        userKd = Number(userPlayer.kpd); 
                         playerCount++;
                     } else {
                         if (
@@ -63,6 +68,7 @@ export async function GET(request) {
                             player.class_stats[0].total_time > 1200
                         ) {
                             totalDpm += player.dapm;
+                            totalKd += Number(player.kpd); 
                             playerCount++; 
                         }
                     }
@@ -70,12 +76,14 @@ export async function GET(request) {
     
                 let avgDpm = totalDpm / playerCount; 
                 let dpmRatio = userDpm / avgDpm; 
-    
-                console.log(dpmRatio);
+                
+                let avgKd = totalKd / playerCount; 
+                let kdRatio = userKd / avgKd; 
     
                 await writer.write(encoder.encode(JSON.stringify({
                     id: logsList[i],
-                    dpmRatio: dpmRatio
+                    dpmRatio: dpmRatio, 
+                    kdRatio: kdRatio 
                 }) + '\n'));
             }
         }
