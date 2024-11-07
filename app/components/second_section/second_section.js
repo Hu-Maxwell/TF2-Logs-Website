@@ -5,6 +5,8 @@ import LoadingComponent from './loading.js';
 import AverageDPMComponent from './average.js';
 import MessageComponent from './logs_list.js';
 
+import LogsChart from './chart.js';
+
 function SecondSectionComponent({ id64, dpmList, setDpmList, setLoading, loading}) {
     const secondSectionRef = useRef(null); 
     useEffect(() => {
@@ -15,7 +17,6 @@ function SecondSectionComponent({ id64, dpmList, setDpmList, setLoading, loading
 
     return (
         <div className="second-section" ref={secondSectionRef}> 
-
             {(loading === "LOADING" || loading === "SUCCESS") &&
             <>
                 {loading === "LOADING" && <LoadingComponent setLoading={setLoading}/>}
@@ -25,6 +26,10 @@ function SecondSectionComponent({ id64, dpmList, setDpmList, setLoading, loading
                 </div>
 
                 <div className="right-half">
+                    <div className="chart-container"> 
+                        <LogsChart />
+                    </div>
+
                     <div className="scrollable-container">
                         <MessageComponent
                             id64={id64}
