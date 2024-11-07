@@ -1,0 +1,60 @@
+.left-half, .right-half {
+    width: 45%; /* Adjust as needed */
+    display: flex;
+    justify-content: center; /* Horizontally center content */
+    align-items: center; /* Vertically center content */
+}
+
+
+.scrollable-container {
+    width: 375  px;
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.8); 
+    z-index: 2;
+
+    font-size: 15;
+}
+ 
+.scrollable-container::-webkit-scrollbar {
+    width: 10px; 
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+    background: transparent; 
+    border-radius: 10px; 
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+    background-color: black; 
+    border-radius: 10px; 
+    border: 2px solid transparent; 
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555; 
+}
+
+
+.loading-logo-container {
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    z-index: 1; 
+}
+
+.loading-logo {
+    animation: rotation 8s infinite linear;
+    /* make bigger */ 
+} 
+
+.average-dpm {
+    font-family: 'TF2Build', sans-serif;
+    font-size: 80px;
+
+    z-index: 2;
+}

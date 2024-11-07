@@ -1,3 +1,5 @@
+import "./first_section.css";
+
 import HeaderComponent from './header.js';
 import InputComponent from './input.js';
 

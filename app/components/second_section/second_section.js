@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import "./second_section.css";
 
 import LoadingComponent from './loading.js';
 import AverageDPMComponent from './average.js';
