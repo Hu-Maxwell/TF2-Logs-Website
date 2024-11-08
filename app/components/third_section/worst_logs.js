@@ -3,7 +3,7 @@ function TopFiveWorstLogsComponent({ dpmList }) {
     const worstLogs = [...dpmList].sort((a, b) => a.dpmRatio - b.dpmRatio).slice(0, 5);
 
     return (
-        <div className="top-five-worst-logs">
+        <div className="top-five-worst-component">
             <h3>Top 5 Worst Logs</h3>
             {worstLogs.map((log) => (
                 <div key={log.id}> 

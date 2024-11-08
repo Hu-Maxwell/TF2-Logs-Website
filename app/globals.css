@@ -19,27 +19,33 @@
 }
 
 .first-section {
-    background-color: red; 
     height: 100vh; 
+
+    background-color: #f5e7de; 
 }
 
 .second-section {
-    background-color: green; 
-
-    position: relative; 
-    transform: translateY(100px);
     height: 100vh;
+    /* adds a little gap between each viewport */
+    transform: translateY(100px); 
+
+    /* bg is in left / right section */
+
+        
+    /* i dont know why it needs a flex here but it prevents it from messing up */
     display: flex;
-    justify-content: space-between; 
-    align-items: center; 
+
     transition: opacity 0.5s ease, transform 0.5s ease;
-    padding: 05%; 
 }
 
 .third-section {
-    background-color: blue; 
-
-    transform: translateY(100px);
     height: 100vh;
+    /* i don't know why this doesn't add a gap between the viewports */
+    transform: translateY(100px);
+
+    background-color: #34302d; 
+    
+    display: flex;
+
     transition: opacity 0.5s ease, transform 0.5s ease;
 }

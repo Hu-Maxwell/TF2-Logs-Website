@@ -3,7 +3,7 @@ function TopFiveBestLogsComponent({ dpmList }) {
     const bestLogs = [...dpmList].sort((a, b) => b.dpmRatio - a.dpmRatio).slice(0, 5);
 
     return (
-        <div className="top-five-best-logs">
+        <div className="top-five-best-component">
             <h3>Top 5 Best Logs</h3>
             {bestLogs.map((log) => (
                 <div key={log.id}> 

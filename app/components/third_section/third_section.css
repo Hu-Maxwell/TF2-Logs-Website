@@ -1,0 +1,21 @@
+.top-five-component {
+    font-family: 'TF2Build', sans-serif;
+    font-size: 32px;
+    color: #f5e7de; 
+
+    /* horizontal center */
+    justify-content: center;
+    width: 100%;
+
+    /* vertical center  */
+    align-items: center;
+    
+    /* applies the centering */
+    display: flex;
+    /* stacked above each other instead of side by side */
+    flex-direction: column;
+}
+
+.top-five-worst-component, .top-five-best-component {
+    padding: 32px;
+}

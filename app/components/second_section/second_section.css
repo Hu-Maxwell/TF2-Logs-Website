@@ -1,8 +1,22 @@
 .left-half, .right-half {
-    width: 45%; /* Adjust as needed */
-    justify-content: center; /* Horizontally center content */
-    align-items: center; /* Vertically center content */
-    z-index: 2;
+    width: 50%; 
+    height: 100%; 
+    
+    /* horizontal center */
+    justify-content: center;
+    /* vertical center  */
+    align-items: center;
+    /* applies the centering */
+    display: flex;
+    flex-direction: column;
+}
+
+.left-half {
+    background-color: #5b7a8c;
+}
+
+.right-half {
+    background-color: #bd3b3b;
 }
 
 
@@ -16,6 +30,8 @@
     background-color: rgba(255, 255, 255, 0.8); 
 
     font-size: 15;
+
+    z-index: 2;
 }
  
 .scrollable-container::-webkit-scrollbar {
@@ -54,4 +70,9 @@
 .average-dpm {
     font-family: 'TF2Build', sans-serif;
     font-size: 80px;
+    z-index: 2;
+}
+
+.chart-container {
+    z-index: 2;
 }
