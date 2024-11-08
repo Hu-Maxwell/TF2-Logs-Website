@@ -14,7 +14,14 @@ export async function fetchLogList(id64) {
     const data = await response.json();
     
     // Ensure unique log IDs
-    const uniqueLogs = Array.from(new Set(data.logs.map(log => log.id)));
+    const uniqueLogs = Array.from(
+        new Set(
+            data.logs
+            .filter(log => log.players === 12) 
+            .map(log => log.id)
+        )
+    );
+
     return uniqueLogs;
 }
 
@@ -35,16 +42,24 @@ export async function GET(request) {
 
     (async () => {
         for(let i = 0; i < logsList.length; i++) {
+            console.log(logsList[i]); 
             const response = await fetch(`https://logs.tf/api/v1/log/${logsList[i]}`);
+
+            if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) {
+                console.error(`Skipping log ${logsList[i]} due to invalid response.`);
+                continue;
+            }
+
             const logData = await response.json(); 
             const userPlayer = logData.players[id3];
 
-            // if log is invalid, skip 
+            
             if(
                 userPlayer.class_stats[0].type == "medic" ||
                 userPlayer.class_stats[0].total_time < 1200 || 
                 logData.length < 1200
             ) { 
+                console.log("BB" + logsList[i]); 
                 // skip
             } else { 
                 let userDpm = 0;

@@ -19,10 +19,13 @@
 }
 
 .first-section {
+    background-color: red; 
     height: 100vh; 
 }
 
 .second-section {
+    background-color: green; 
+
     position: relative; 
     transform: translateY(100px);
     height: 100vh;
@@ -30,10 +33,12 @@
     justify-content: space-between; 
     align-items: center; 
     transition: opacity 0.5s ease, transform 0.5s ease;
-    padding: 0 5%; 
+    padding: 05%; 
 }
 
 .third-section {
+    background-color: blue; 
+
     transform: translateY(100px);
     height: 100vh;
     transition: opacity 0.5s ease, transform 0.5s ease;

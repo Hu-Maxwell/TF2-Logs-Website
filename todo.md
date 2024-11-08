@@ -13,6 +13,7 @@ X. add ui elements
 then publish site 
 
 X. backend
+ - do it into a database instead
  - auto DPM multiplier for scout and soldier
 
 X. frontend
