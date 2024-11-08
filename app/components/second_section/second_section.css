@@ -1,19 +1,19 @@
 .left-half, .right-half {
     width: 45%; /* Adjust as needed */
-    display: flex;
     justify-content: center; /* Horizontally center content */
+    align-items: center; /* Vertically center content */
+    z-index: 2;
 }
 
 
 .scrollable-container {
-    width: 375  px;
+    /*  width: 375px;  */
     height: 300px;
     overflow-y: auto;
     border: 1px solid #ccc;
     padding: 10px;
     margin-top: 10px;
     background-color: rgba(255, 255, 255, 0.8); 
-    z-index: 2;
 
     font-size: 15;
 }
@@ -54,6 +54,4 @@
 .average-dpm {
     font-family: 'TF2Build', sans-serif;
     font-size: 80px;
-
-    z-index: 2;
 }

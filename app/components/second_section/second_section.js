@@ -27,7 +27,7 @@ function SecondSectionComponent({ id64, dpmList, setDpmList, setLoading, loading
 
                 <div className="right-half">
                     <div className="chart-container"> 
-                        <LogsChart />
+                        <LogsChart dpmList={dpmList} />
                     </div>
 
                     <div className="scrollable-container">

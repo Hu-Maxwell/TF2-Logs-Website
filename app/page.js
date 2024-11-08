@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-
+    
 import FirstSectionComponent from './components/first_section/first_section.js';
 import SecondSectionComponent from './components/second_section/second_section.js';
 import ThirdSectionComponent from './components/third_section/third_section.js';

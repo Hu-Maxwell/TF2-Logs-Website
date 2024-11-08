@@ -4,9 +4,8 @@ X. add ui elements
     - avg dpm top left
     - tf2 logo spininng 
     - all logs
-    - XXXXX elapsed time 
     - XXXXX color coded tf2 logs, green good red bad
-    - XXXXX average K/D
+    - average K/D
 - when fin:
     your top 5 worst logs are: 
     your top 5 best logs are: 
@@ -24,9 +23,12 @@ X. add filter options
  - don't do auto DPM filter
 
 X. add more stats and functionality, such as 
- - impact calculator
+ - impact calculator using 
+    - elo https://www.unrankedsmurfs.com/blog/what-is-elo-in-league-of-legends-and-how-does-it-work 
+    - or openskill https://openskill.me/en/stable/  
  - predicted impact 
  - rgl winner predictions 
  - how fast you learn vs typical player
  - your exp vs others exp 
  - graphs
+ - 
