@@ -25,16 +25,17 @@ function LogsChart({ dpmList }) {
             {
                 label: 'DPM Ratio',
                 data: dataValues,
-                fill: false, // No fill under the line
-                backgroundColor: 'rgba(75,192,192,1)',
-                borderColor: 'rgba(75,192,192,0.4)',
-                tension: 0.3, // Curve for the line
+                fill: false, 
+                backgroundColor: 'rgba(255, 255, 255, 1)',
+                borderColor: 'rgba(0,0,0,1)',
+                tension: 0.3, // curve for the line
             },
         ],
     };
       
     const options = {
         responsive: true,
+
         plugins: {
             legend: {
                 display: false,
@@ -44,6 +45,7 @@ function LogsChart({ dpmList }) {
                 text: 'Logs Over Time',
             },
         },
+
         scales: {
             x: {
                 display: false
@@ -52,12 +54,24 @@ function LogsChart({ dpmList }) {
                 beginAtZero: true,
             },
         },
+        pointBackgroundColor: '#36A2EB', // change this later
+        pointHoverBackgroundColor: '#9BD0F5', // change this later
+        backgroundColor: 'f5e7de',
+        showLine: false 
+
+        // TODO
+        // change opacity of dots
+        // change color of dots
+        // change color of text
+        // change font of text
+        // change y axis scale 
+        // 
     };      
 
     return (
-        <div>
-            <Line data={data} options={options} />
-        </div>
+        <>
+            <Line className="chart" data={data} options={options} />
+        </>
     );
 };
 export default LogsChart;

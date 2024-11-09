@@ -19,6 +19,20 @@
     background-color: #bd3b3b;
 }
 
+.chart-container {
+    background-color: #ffffff;
+    opacity: 1;
+
+    width: 600px;
+
+    justify-content: center;
+    display: flex;
+
+    z-index: 2;
+}
+
+.chart {
+}
 
 .scrollable-container {
     /*  width: 375px;  */
@@ -70,9 +84,5 @@
 .average-dpm {
     font-family: 'TF2Build', sans-serif;
     font-size: 80px;
-    z-index: 2;
-}
-
-.chart-container {
     z-index: 2;
 }

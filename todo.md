@@ -6,8 +6,9 @@ X. add ui elements
     - all logs
     - XXXXX color coded tf2 logs, green good red bad
     - average K/D
+    - XXXXX make chart look good
 - when fin:
-    your top 5 worst logs are: 
+    your top 5 worst logs are: d
     your top 5 best logs are: 
 
 then publish site 
